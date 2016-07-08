@@ -1,0 +1,82 @@
+$(function() {
+	toggleNav(6, 2, 0);
+
+	searchTableData();
+});
+function searchTableData() {
+	$ShowListTable = $('#showListTable')
+			.DataTable(
+					{
+						"pageLength" : 10,
+						"lengthChange" : false,
+						"pagingType" : "full_numbers",
+						"searching" : false,
+						"ordering" : false,
+						"processing" : true,
+						"serverSide" : true,
+						"ajax" : {
+							url : basePath + "/brands/search",
+							type : "POST",
+							data : {},
+
+						},
+						"columns" : [
+								{
+									"data" : "brandsName",
+									width : "35%",
+									"render" : function(data, type, row, meta) {
+										return '<span>' + data + "</span>";
+									}
+								},
+								{
+									"data" : "brandsCode",
+									width : "35%",
+									"render" : function(data, type, row, meta) {
+										return '<span>' + data + "</span>";
+									}
+								},
+								{
+									"data" : "brandsId",
+									"width" : "14%",
+									"render" : function(data, type, row, meta) {
+										return '<div class="am-btn-toolbar">'
+												+ '<div class="am-btn-group am-btn-group-xs">'
+												+ '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="location.href=\''+basePath+'/commodity/brands/edit/view?id='
+												+ data + '\'">' + "编辑"
+												+ '</button>'
+												+ '<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" onclick="del('
+												+ data + ')">' + "删除"
+												+ '</button>' + '</div></div>';
+									}
+								} ]
+					});
+}
+function del(id) {
+	$
+			.ajax({
+				url : basePath + "/brands/del",
+				data : {
+					"brandsId" : id
+				},
+				dataType : "json",
+				type : "post",
+				success : function(data) {
+					if (data.success) {
+						alert("删除成功");
+						window.location.href = basePath
+								+ "/commodity/brands/list/view";
+					} else {
+						alert(data.msg);
+					}
+				},
+
+				error : function() {
+					alert("请求失败");
+				}
+			});
+}
+function search() {
+	$ShowListTable.ajax.url(
+			basePath + "/brands/search?searchCode="
+					+ $.trim($("#searchCode").val())).load();
+}

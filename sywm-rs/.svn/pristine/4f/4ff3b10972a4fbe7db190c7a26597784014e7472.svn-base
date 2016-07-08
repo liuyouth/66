@@ -1,0 +1,15 @@
+package com.rescam.sywm.rs.uri.commodityBase;
+
+public class SYWMBrandURI {
+
+	public static final String Base = "driver";
+
+	public static final String Add = "add";
+	public static final String Read = "read";
+	public static final String Count = "count";
+	public static final String Search = "search";
+	public static final String Del = "del";
+	public static final String Unique = "unique";
+	public static final String Updata = "updata";
+	public static final String Kv = "kv";
+}

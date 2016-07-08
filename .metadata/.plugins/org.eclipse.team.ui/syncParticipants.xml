@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syncparticipants>
+<participant displayName="SVN (/common-rs, /common-server, /common-vo, /common-web, /syhz-web, /sytm-web, /sywm-rs, /sywm-server, /sywm-web)" id="org.tigris.subversion.subclipse.participant" secondary_id="1467950582502">
+<data root="false">
+<org.eclipse.team.ui.TEAMSUBSRCIBERSETTINGS org.eclipse.team.ui.SCOPE_TYPE="ResourceScope">
+<org.eclipse.team.ui.TEAMSUBSRCIBER_REFRESHSCHEDULE org.eclipse.team.ui.CTX_REFRESHSCHEDULE_ENABLED="false" org.eclipse.team.ui.CTX_REFRESHSCHEDULE_INTERVAL="3600" org.eclipse.team.ui.CTX_REFRESHSCHEDULE_RUNONCE="false"/>
+<resource_scope_roots resource_scope_root_resource="/common-rs"/>
+<resource_scope_roots resource_scope_root_resource="/common-server"/>
+<resource_scope_roots resource_scope_root_resource="/common-vo"/>
+<resource_scope_roots resource_scope_root_resource="/common-web"/>
+<resource_scope_roots resource_scope_root_resource="/syhz-web"/>
+<resource_scope_roots resource_scope_root_resource="/sytm-web"/>
+<resource_scope_roots resource_scope_root_resource="/sywm-rs"/>
+<resource_scope_roots resource_scope_root_resource="/sywm-server"/>
+<resource_scope_roots resource_scope_root_resource="/sywm-web"/>
+</org.eclipse.team.ui.TEAMSUBSRCIBERSETTINGS>
+</data>
+</participant>
+</syncparticipants>

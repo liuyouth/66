@@ -1,0 +1,140 @@
+package com.rescam.sywm.server.controller.goodsOwner;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.rescam.common.vo.ResultInfo;
+import com.rescam.sywm.server.entity.Recipient;
+import com.rescam.sywm.server.service.goodsOwner.RecipientService;
+
+@RestController
+@RequestMapping("/recipient")
+public class RecipientController {
+	@Resource
+	RecipientService service;
+
+	@RequestMapping("/count")
+	public ResultInfo getCount(@RequestParam Map<String, String> params) {
+		ResultInfo result = new ResultInfo();
+		try {
+			Long count = service.getCount(params);
+			result.setSuccess(true);
+			result.setMsg(count);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.setSuccess(false);
+			result.setMsg("系统异常");
+		}
+
+		return result;
+	}
+
+	/**
+	 * 按条件查询数据列表
+	 * 
+	 * @param params
+	 *            map{searchCode:入库编号 , searchDate:入库时间 , warehouseId:仓库ID ,
+	 *            enterpriseId:企业ID , page:页码 , length:最大返回条数 ,}
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/search")
+	public ResultInfo search(@RequestParam Map<String, String> params) {
+		ResultInfo result = new ResultInfo();
+		try {
+			List<Recipient> list = service.search(params);
+			result.setSuccess(true);
+			result.setMsg(list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.setSuccess(false);
+			result.setMsg("系统异常");
+		}
+
+		return result;
+	}
+
+	@RequestMapping("/read")
+	public ResultInfo read(@RequestParam Map<String, String> params) {
+		ResultInfo resultInfo = new ResultInfo();
+		try {
+			resultInfo.setMsg(service.read(params));
+			resultInfo.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resultInfo;
+	}
+
+	// 批量删除
+	@RequestMapping("/delete")
+	public ResultInfo delete(@RequestParam List<Integer> ids,
+			HttpServletRequest request) {
+		ResultInfo resultInfo = new ResultInfo();
+		try {
+			for (Integer id : ids) {
+				service.delete(id);
+			}
+			resultInfo.setMsg("删除成功！");
+			resultInfo.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultInfo.setMsg("系统错误！");
+		}
+		return resultInfo;
+	}
+
+	@RequestMapping("/add")
+	public ResultInfo add(@ModelAttribute Recipient recipient) {
+		ResultInfo resultInfo = new ResultInfo();
+		try {
+
+			resultInfo.setMsg(service.add(recipient));
+			resultInfo.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultInfo.setMsg("系统错误！");
+		}
+		return resultInfo;
+
+	}
+
+	@RequestMapping("/update")
+	public ResultInfo update(@ModelAttribute Recipient recipient) {
+		ResultInfo resultInfo = new ResultInfo();
+		try {
+			resultInfo.setMsg(service.update(recipient));
+			resultInfo.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultInfo.setMsg("系统错误！");
+		}
+		return resultInfo;
+
+	}
+
+	@RequestMapping("/unique")
+	public ValidInfo unique(@RequestParam Map<String, String> params) {
+		ValidInfo info = new ValidInfo();
+		String logisticsCode = params.get("logisticsCode");
+		try {
+			Boolean flag = service.unique(params);
+
+			info.setMsg(flag);
+			info.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return info;
+
+	}
+}

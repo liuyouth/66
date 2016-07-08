@@ -1,0 +1,81 @@
+$(function() {
+	// 切换导航状态
+	toggleNav(6, 3, 0);
+
+	searchTableData();
+});
+function searchTableData(){
+	 $ShowListTable = $('#showListTable').DataTable({
+       "pageLength": 10,
+       "lengthChange": false,
+       "pagingType": "full_numbers",
+       "searching": false,
+       "ordering":  false,
+       "processing": true,
+       "serverSide": true,
+       "ajax": {
+           url: basePath+"/commodityBase/search",
+           type: "POST",
+           data:{},
+
+       },
+       "columns": [
+	          /*  {	
+	                "data": "a",
+	                width:"5%",
+	                "render":function ( data, type, row, meta ) {
+	                    return '<input type="checkbox" class="ckClassFlg" name="aIdChk" value="'+data+'"/>';
+	                }
+	            },*/
+           {
+               "data": "commodityName",
+               "render":function ( data, type, row, meta ) {
+               	return '<span>' + data + "</span>";
+               }
+           },
+           {
+               "data": "commodityTypeName",
+              	"render":function ( data, type, row, meta ) {
+              		return '<span >' + data + "</span>";
+               }
+           },
+           {
+        	   "data": "brandsName",
+        	   "render":function ( data, type, row, meta ) {
+        		   return '<span >' + data + "</span>";
+        	   }
+           },
+           {
+               "data": "commodityOrigin",
+              	"render":function ( data, type, row, meta ) {
+              		return '<span>' + data + "</span></td>";
+               }
+           },
+           {
+        	   "data": "commoditySinglePackingUnit",
+        	   "render":function ( data, type, row, meta ) {
+        		   return '<span>' + data + "</span></td>";
+        	   }
+           },
+           {
+               "data": "commoditySingleWeight",
+              	"render":function ( data, type, row, meta ) {
+              		return '<span>' + data + "</span>";
+               }
+           },
+          {
+           	"data": "a",
+               "width":"12%",
+              	"render":function ( data, type, row, meta ) {
+              		return '<div class="am-btn-toolbar">'
+              		+'<div class="am-btn-group am-btn-group-xs">'
+              		+'<button class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="location.href=\''+basePath+'/commodityBase/edit/view?id='+data+'\'">'
+              		+'<span class="am-icon-pencil-square-o"></span></button>'
+              		+'<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" onclick="del('+data+')">'
+              		+'<span class="am-icon-trash-o"></span></button>'
+              		+'</div></div>';
+               }
+           }
+       ]
+   });
+}

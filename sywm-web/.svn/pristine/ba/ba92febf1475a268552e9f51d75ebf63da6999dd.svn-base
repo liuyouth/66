@@ -1,0 +1,18 @@
+package com.rescam.sywm.web.service.warehouse;
+
+import java.util.List;
+import java.util.Map;
+
+import com.rescam.common.web.service.BaseService;
+
+public interface GoodsLocatorService extends BaseService {
+
+	public long count(String searchParam) throws Exception;
+
+	public List search(int page, int length, String searchParam) throws Exception;
+
+	public String edit(Map<String, String> params) throws Exception;
+
+	public void update(Map<String, String> params) throws Exception;
+
+}

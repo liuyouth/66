@@ -1,0 +1,9 @@
+package com.rescam.sywm.server.service.commodityBase;
+
+import com.rescam.sywm.server.vo.ZTreeNode;
+
+public interface CommodityTypeService {
+
+	public ZTreeNode queryTree();
+
+}

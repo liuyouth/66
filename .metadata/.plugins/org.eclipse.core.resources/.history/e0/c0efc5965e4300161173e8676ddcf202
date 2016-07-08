@@ -1,0 +1,109 @@
+package com.rescam.sywm.server.controller.commodityBase;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.rescam.common.vo.ResultInfo;
+import com.rescam.sywm.rs.uri.commodityBase.SYWMCommodityBaseURI;
+import com.rescam.sywm.server.entity.CommodityBase;
+import com.rescam.sywm.server.service.commodityBase.CommodityBaseService;
+
+@RestController
+@RequestMapping(value = SYWMCommodityBaseURI.Base, method = RequestMethod.POST)
+public class CommodityBaseController {
+	@Resource
+	CommodityBaseService service;
+
+	/**
+	 * 按条件查询数据列表数量
+	 * 
+	 * @throws Exception
+	 */
+	@RequestMapping(SYWMCommodityBaseURI.Count)
+	public ResultInfo getCount(@RequestParam Map<String, String> params)
+			throws Exception {
+		ResultInfo result = new ResultInfo();
+
+		Long count = service.getCount(params);
+		result.setSuccess(true);
+		result.setMsg(count);
+
+		return result;
+	}
+
+	/**
+	 * 按条件查询数据列表
+	 * 
+	 * @throws Exception
+	 */
+	@RequestMapping(SYWMCommodityBaseURI.Search)
+	public ResultInfo search(@RequestParam Map<String, String> params)
+			throws Exception {
+		ResultInfo result = new ResultInfo();
+		List<CommodityBase> list = service.search(params);
+		result.setSuccess(true);
+		result.setMsg(list);
+
+		return result;
+	}
+
+	@RequestMapping(SYWMCommodityBaseURI.Read)
+	public ResultInfo read(@RequestParam Map<String, String> params)
+			throws Exception {
+		ResultInfo resultInfo = new ResultInfo();
+
+		resultInfo.setMsg(service.read(params));
+		resultInfo.setSuccess(true);
+
+		return resultInfo;
+	}
+
+	@RequestMapping(SYWMCommodityBaseURI.Delete)
+	public ResultInfo delete(@RequestParam Map<String, String> params,
+			HttpServletRequest request) throws Exception {
+		ResultInfo resultInfo = new ResultInfo();
+		service.delete(params.get("commodityBaseIds"));
+		resultInfo.setMsg("删除成功！");
+		resultInfo.setSuccess(true);
+		return resultInfo;
+	}
+
+	@RequestMapping(SYWMCommodityBaseURI.Add)
+	public ResultInfo add(@ModelAttribute CommodityBase commodityBase) {
+		ResultInfo resultInfo = new ResultInfo();
+		resultInfo.setMsg(service.add(commodityBase));
+		resultInfo.setSuccess(true);
+		return resultInfo;
+
+	}
+
+	@RequestMapping(SYWMCommodityBaseURI.Update)
+	public ResultInfo update(@RequestParam Map<String, Object> params) throws Exception {
+		ResultInfo resultInfo = new ResultInfo();
+		resultInfo.setMsg(service.update(params));
+		resultInfo.setSuccess(true);
+		return resultInfo;
+
+	}
+
+	@RequestMapping(SYWMCommodityBaseURI.Unique)
+	public ResultInfo unique(@RequestParam Map<String, String> params)
+			throws Exception {
+		ResultInfo info = new ResultInfo();
+		Boolean flag = service.unique(params);
+
+		info.setMsg(flag);
+		info.setSuccess(true);
+		return info;
+
+	}
+}

@@ -1,0 +1,8 @@
+package com.rescam.sywm.web.service.commodityBase;
+
+import com.rescam.common.web.service.BaseService;
+
+public interface CommodityTypeService extends BaseService {
+
+	public void queryTree() throws Exception;
+}

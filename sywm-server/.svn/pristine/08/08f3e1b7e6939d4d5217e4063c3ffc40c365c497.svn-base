@@ -1,0 +1,79 @@
+package com.rescam.sywm.server.service.system.impl;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.rescam.common.server.dao.BaseDAO;
+import com.rescam.common.server.util.EntityUtils;
+import com.rescam.sywm.server.entity.UserInfo;
+import com.rescam.sywm.server.service.system.UserInfoService;
+
+@Service
+public class UserInfoServiceImpl implements UserInfoService {
+	@Autowired
+	private BaseDAO<UserInfo> userInfoDao;
+
+	@Override
+	public Serializable add(UserInfo userInfo) {
+		return userInfoDao.save(userInfo);
+	}
+
+	@Override
+	public List<UserInfo> uniqueLoginName(Map<String, String> params) throws Exception {
+		return userInfoDao.find("from UserInfo where loginName=? ", new Object[] { params.get("param") });
+	}
+
+	@Override
+	public List<UserInfo> search(Map<String, String> params) {
+		String hql = "from UserInfo where isDelete=0";
+		if (params.get("searchParam") != null & params.get("searchParam") != "") {
+			String searchParam = params.get("searchParam");
+			hql += "and (loginName like '%" + searchParam + "%' or userName like '%" + searchParam + "%')";
+		}
+
+		// 每页显示的数据量
+		int length = Integer.valueOf(params.get("length"));
+		// 转换为page
+		int page = Integer.valueOf(params.get("page"));
+		return userInfoDao.find(hql, new Object[0], page, length);
+	}
+
+	@Override
+	public Long count(Map<String, String> params) {
+		String hql = "select count(1) from UserInfo where isDelete=0";
+		if (params.get("searchParam") != null & params.get("searchParam") != "") {
+			String searchParam = params.get("searchParam");
+			hql += "and (loginName like '%" + searchParam + "%' or userName like '%" + searchParam + "%')";
+		}
+		return userInfoDao.count(hql);
+	}
+
+	@Override
+	public void del(Map<String, String> params) {
+		int userInfoId = Integer.valueOf(params.get("userInfoId"));
+		String hql = "update UserInfo set isDelete=1 where userInfoId=" + userInfoId + "";
+		userInfoDao.executeHql(hql);
+
+	}
+
+	@Override
+	public UserInfo read(Map<String, String> params) {
+		int userInfoId = Integer.valueOf(params.get("userInfoId"));
+		return userInfoDao.get(UserInfo.class, userInfoId);
+	}
+
+	@Override
+	public void update(Map<String, String> params) throws Exception {
+		UserInfo userInfo = userInfoDao.get(UserInfo.class, Integer.valueOf(params.get("userInfoId")));
+
+		EntityUtils.populate(userInfo, params);
+
+		userInfoDao.update(userInfo);
+
+	}
+
+}

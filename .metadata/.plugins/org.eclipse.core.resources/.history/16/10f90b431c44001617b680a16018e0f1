@@ -1,0 +1,24 @@
+package com.rescam.sywm.server.service.commodityBase;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import com.rescam.sywm.server.entity.CommodityPacking;
+
+public interface CommodityPackingService {
+
+	Long getCount(Map<String, String> params) throws Exception;
+
+	List<CommodityPacking> search(Map<String, String> params) throws Exception;
+
+	CommodityPacking read(Map<String, String> params) throws Exception;
+
+	void delete(String commodityPackingId) throws Exception;
+
+	Serializable add(CommodityPacking commodityPacking);
+
+	Boolean update(Map<String, Object> params) throws Exception;
+
+	Boolean unique(Map<String, String> params) throws Exception;
+}

@@ -1,0 +1,8 @@
+package com.rescam.sywm.rs.uri.commodityBase;
+
+public class SYWMCommodityTypeURI {
+	
+	public static final String Base = "commodityType";
+
+	public static final String QueryTree = "queryTree";
+}

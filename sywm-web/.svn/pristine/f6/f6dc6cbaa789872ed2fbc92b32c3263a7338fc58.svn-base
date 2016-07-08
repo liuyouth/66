@@ -1,0 +1,96 @@
+$(function() {
+	// 切换导航状态
+	toggleNav(8, 1, 0);
+
+	searchTableData();
+});
+function searchTableData() {
+	$ShowListTable = $('#showListTable')
+			.DataTable(
+					{
+						"pageLength" : 10,
+						"lengthChange" : false,
+						"pagingType" : "full_numbers",
+						"searching" : false,
+						"ordering" : false,
+						"processing" : true,
+						"serverSide" : true,
+						"ajax" : {
+							url : basePath + "/driver/search",
+							type : "POST",
+							data : {},
+
+						},
+						"columns" : [
+								{
+									"data" : "loginName",
+									width : "25%",
+									"render" : function(data, type, row, meta) {
+										return '<span>' + data + "</span>";
+									}
+								},
+								{
+									"data" : "driverName",
+									width : "25%",
+									"render" : function(data, type, row, meta) {
+										return '<span>' + data + "</span>";
+									}
+								},
+								{
+									"data" : "driverMobile",
+									width : "25%",
+									"render" : function(data, type, row, meta) {
+										return '<span>' + data + "</span>";
+									}
+								},
+								{
+									"data" : "driverId",
+									"width" : "14%",
+									"render" : function(data, type, row, meta) {
+										return '<div class="am-u-sm-12" style="text-align: center;">'
+												+ '<div class="am-btn-group am-btn-group-xs">'
+												+ '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="location.href=\''
+												+ basePath
+												+ '/commodity/brands/edit/view?id='
+												+ data
+												+ '\'"><span class="am-icon-edit"></span>'
+												+ "编辑"
+												+ '</button>'
+												+ '<button class="am-btn am-btn-default am-btn-xs am-text-danger" onclick="del('
+												+ data
+												+ ')"><span class="am-icon-trash-o"></span>'
+												+ "删除"
+												+ '</button>' + '</div></div>';
+									}
+								} ]
+					});
+}
+function del(id) {
+	$
+			.ajax({
+				url : basePath + "/driver/del",
+				data : {
+					"brandsId" : id
+				},
+				dataType : "json",
+				type : "post",
+				success : function(data) {
+					if (data.success) {
+						alert("删除成功");
+						window.location.href = basePath
+								+ "/commodity/driver/list/view";
+					} else {
+						alert(data.msg);
+					}
+				},
+
+				error : function() {
+					alert("请求失败");
+				}
+			});
+}
+function search() {
+	$ShowListTable.ajax.url(
+			basePath + "/driver/search?searchCode="
+					+ $.trim($("#searchCode").val())).load();
+}

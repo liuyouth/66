@@ -1,0 +1,49 @@
+package com.rescam.sywm.server.service.warehouse.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.rescam.common.server.dao.BaseDAO;
+import com.rescam.sywm.server.entity.StorageRacks;
+import com.rescam.sywm.server.service.warehouse.StorageRacksService;
+
+@Service
+public class StorageRacksServerImpl implements StorageRacksService{
+	
+	@Autowired
+	private BaseDAO<StorageRacks> storageRacksDAO;
+
+	@Override
+	public Long getCount(Map<String, String> params) throws Exception {
+		String hql = "select count(1) from StorageRacks ";
+		String searchParam = params.get("searchParam");
+		if (searchParam != null & searchParam != "") {
+			hql += "where storageRacksCode like '%" + searchParam + "%' ";
+		}
+
+		return storageRacksDAO.count(hql);
+	}
+
+	@Override
+	public List<StorageRacks> search(Map<String, String> params) throws Exception {
+		String hql = "from StorageRacks ";
+		String searchParam = params.get("searchParam");
+		int page = Integer.valueOf((params.get("page")));
+		int rows = Integer.valueOf((params.get("length")));
+		if (searchParam != null & searchParam != "") {
+			hql += "where storageRacksCode like '%" + searchParam + "%' ";
+		}
+
+		return storageRacksDAO.find(hql, new Object[0], page, rows);
+	}
+
+	@Override
+	public StorageRacks edit(Integer storageRacksId) throws Exception {
+		StorageRacks storageRacks = storageRacksDAO.get(StorageRacks.class, storageRacksId);
+		return storageRacks;
+	}
+
+}

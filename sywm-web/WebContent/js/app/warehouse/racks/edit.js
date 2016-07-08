@@ -1,0 +1,83 @@
+/**
+ * 
+ */
+$(function() {
+	// 切换导航状态
+	toggleNav(9, 2, 0);
+
+	// 加载数据
+	$.ajax({
+		url : basePath + "/storageRacks/edit",
+		data : {
+			storageRacksId : storageRacksId
+		},
+		dataType : 'json',
+		success : function(data) {
+			$("#editForm").form('load', data.msg);
+			if (data.msg.storageRacksType == 10) {
+				$("#storageRacksType").text("标准横梁式");
+			} else if (data.msg.storageRacksType == 11) {
+				$("#storageRacksType").text("横梁式（被立柱所挡，不可用）");
+			} else if (data.msg.storageRacksType == 12) {
+				$("#storageRacksType").text("横梁式（被横梁所挡，上3层不可用）");
+			} else if (data.msg.storageRacksType == 13) {
+				$("#storageRacksType").text("横梁式（下层拆零货架）");
+			} else if (data.msg.storageRacksType == 14) {
+				$("#storageRacksType").text("横梁式（隧道式，上3层可用）");
+			} else if (data.msg.storageRacksType == 22) {
+				$("#storageRacksType").text("标准驶入式（2列）");
+			} else if (data.msg.storageRacksType == 23) {
+				$("#storageRacksType").text("标准驶入式（3列）");
+			} else if (data.msg.storageRacksType == 24) {
+				$("#storageRacksType").text("标准驶入式（4列）");
+			} else {
+				$("#storageRacksType").text("数据错误");
+			}
+		},
+		error : function() {
+			alertWm("系统错误，请稍后再试。");
+		}
+	});
+});
+
+// 表单验证
+$("#editForm").Validform({
+	btnSubmit : "#updateBtn",
+	tiptype : 4,
+	ignoreHidden : true,
+	dragonfly : false,
+	tipSweep : false,
+	showAllError : true,
+	postonce : true,
+	ajaxPost : false,
+	datatype : {
+
+	},
+	usePlugin : {},
+	beforeCheck : function(curform) {
+	},
+	beforeSubmit : function(curform) {
+		submitupdate();
+		return false;
+	},
+	callback : function(data) {
+	}
+});
+
+// 保存
+function submitupdate() {
+	$.ajax({
+		url : basePath + "/storageRacks/update",
+		data : $('#editForm').serialize(),
+		dataType : 'json',
+		type : 'post',
+		success : function(data) {
+			alertWm(data.msg, function() {
+				location.href = basePath + '/warehouse/racks/list/view';
+			});
+		},
+		error : function() {
+			alertWm("系统错误，请稍后再试。");
+		}
+	});
+}

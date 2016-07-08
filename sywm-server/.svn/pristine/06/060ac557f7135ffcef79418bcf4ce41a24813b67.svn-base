@@ -1,0 +1,25 @@
+package com.rescam.sywm.server.service.commodityBase;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import com.rescam.sywm.server.entity.Brands;
+
+public interface BrandService {
+	
+	Serializable addBrand(Brands brands) throws Exception;
+	
+	List<Brands> readTables(Map<String, String> params)throws Exception;
+	
+	Long getCount(Map<String, String> params) throws Exception;
+	
+	List<Brands> search(Map<String, String> params)throws Exception;
+	
+	void del(String id)throws Exception;
+	
+	boolean unique(Map<String, String> params)throws Exception;
+	
+	void updata(Brands brands)throws Exception;
+
+}

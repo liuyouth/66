@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="syhz-web">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="common-rs.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/common-rs/common-rs">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="sywm-rs.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/sywm-rs/sywm-rs">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-web.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/common-web/common-web">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-vo.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/common-vo/common-vo">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="syhz-web"/>
+        <property name="java-output-path" value="/syhz-web/build/classes"/>
+    </wb-module>
+</project-modules>

@@ -1,0 +1,22 @@
+package com.rescam.sywm.web.service.system;
+
+import java.util.List;
+import java.util.Map;
+
+import com.rescam.common.web.service.BaseService;
+
+public interface UserGroupService extends BaseService {
+	String add(Map<String, String> params) throws Exception;
+
+	List<Map<String, Object>> search(Map<String, String> params) throws Exception;
+
+	Long count(Map<String, String> params) throws Exception;
+
+	void del(String userGroupId) throws Exception;
+
+	String read(String userGroupId) throws Exception;
+
+	String update(Map<String, String> params) throws Exception;
+
+	public String uniqueUserGroupName(Map<String, String> params) throws Exception;
+}

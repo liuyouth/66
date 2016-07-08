@@ -1,0 +1,26 @@
+/**
+ * 
+ */
+$(function() {
+	// 切换导航状态
+	toggleNav(9, 2, 0);
+
+	//加载数据
+	$.ajax({
+		url : basePath + "/storageRacks/edit",
+		data : {
+		    storageRacksId : storageRacksId
+		},
+		dataType : 'json',
+		success : function(data) {
+			$("#editForm").form('load', data.msg);
+			$("#warehouseId").val(data.msg.warehouse.warehouseId);
+			if(data.msg.storageAreas){
+			    $("#storageAreasId").val(data.msg.storageAreas.storageAreasId);
+			}
+		},
+		error : function() {
+			alertWm("系统错误，请稍后再试。");
+		}
+	});
+});

@@ -1,0 +1,22 @@
+package com.rescam.sywm.rs.path.commodityBase;
+
+import com.rescam.common.rs.Path;
+import com.rescam.sywm.rs.uri.commodityBase.CommodityTypeURI;
+
+public enum CommodityTypePath implements Path {
+
+	QueryTree(CommodityTypeURI.QueryTree)
+
+	;
+
+	private String pathString;
+
+	CommodityTypePath(String pathString) {
+		this.pathString = "/" + CommodityTypeURI.Base + "/" + pathString;
+	}
+
+	@Override
+	public String asString() {
+		return pathString;
+	}
+}

@@ -1,0 +1,89 @@
+package com.rescam.sywm.server.service.warehouse.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.rescam.common.server.dao.BaseDAO;
+import com.rescam.common.vo.ResultInfo;
+import com.rescam.sywm.server.entity.StorageAreas;
+import com.rescam.sywm.server.service.warehouse.StorageAreasService;
+
+@Service
+public class StorageAreaServerImpl implements StorageAreasService {
+
+	@Autowired
+	private BaseDAO<StorageAreas> storageAreaDAO;
+
+	@Override
+	public Long getCount(Map<String, String> params) throws Exception {
+		String hql = "select count(1) from StorageAreas ";
+		String searchParam = params.get("searchParam");
+		if (searchParam != null & searchParam != "") {
+			hql += "where areasName like '%" + searchParam + "%' ";
+		}
+
+		return storageAreaDAO.count(hql);
+	}
+
+	@Override
+	public List<StorageAreas> search(Map<String, String> params) throws Exception {
+		String hql = "from StorageAreas ";
+		String searchParam = params.get("searchParam");
+		int page = Integer.valueOf((params.get("page")));
+		int rows = Integer.valueOf((params.get("length")));
+		if (searchParam != null & searchParam != "") {
+			hql += "where areasName like '%" + searchParam + "%' ";
+		}
+
+		return storageAreaDAO.find(hql, new Object[0], page, rows);
+	}
+
+	@Override
+	public ResultInfo uniqueStorageAreasName(Map<String, String> params) throws Exception {
+
+		ResultInfo info = new ResultInfo();
+
+		String hql = "from StorageAreas where areasName = ? ";
+		StorageAreas storageAreas = storageAreaDAO.get(hql, new Object[] { params.get("param") });
+
+		if (storageAreas != null) {
+
+			info.setSuccess(false);
+		} else {
+
+			info.setSuccess(true);
+		}
+
+		return info;
+	}
+
+	@Override
+	@Transactional
+	public void add(StorageAreas storageAreas) throws Exception {
+
+		storageAreaDAO.save(storageAreas);
+	}
+
+	@Override
+	public StorageAreas edit(Integer storageAreasId) throws Exception {
+		StorageAreas storageAreas = storageAreaDAO.get(StorageAreas.class, storageAreasId);
+		return storageAreas;
+	}
+
+	@Override
+	@Transactional
+	public void update(Map<String, String> params) throws Exception {
+
+		StorageAreas storageAreas = storageAreaDAO.get(StorageAreas.class,
+				Integer.valueOf(params.get("storageAreasId")));
+
+		BeanUtils.populate(storageAreas, params);
+
+		storageAreaDAO.update(storageAreas);
+	}
+}

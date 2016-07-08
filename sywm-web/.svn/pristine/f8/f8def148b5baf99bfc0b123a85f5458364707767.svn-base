@@ -1,0 +1,14 @@
+package com.rescam.sywm.web.service.commodityBase;
+
+import java.util.Map;
+
+public interface BrandService {
+	
+	public void search() throws Exception;
+
+	public String add(Map<String, String> params) throws Exception;
+
+	
+	
+
+}

@@ -1,0 +1,14 @@
+package com.rescam.sywm.web.service.warehouse;
+
+import java.util.List;
+import java.util.Map;
+
+import com.rescam.common.web.service.BaseService;
+
+public interface StorageAreasService extends BaseService{
+	
+	long count(String searchParam) throws Exception;
+
+	List search(int page, int length, String searchParam) throws Exception;
+
+}

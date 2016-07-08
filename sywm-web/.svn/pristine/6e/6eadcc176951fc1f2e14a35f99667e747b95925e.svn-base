@@ -1,0 +1,24 @@
+package com.rescam.sywm.web.service.commodityBase.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.rescam.common.rs.Client;
+import com.rescam.common.web.service.impl.BaseServiceImpl;
+import com.rescam.sywm.rs.path.commodityBase.CommodityTypePath;
+import com.rescam.sywm.web.service.commodityBase.CommodityTypeService;
+
+@Service
+@Scope("prototype")
+public class CommodityTypeServiceImpl extends BaseServiceImpl implements CommodityTypeService {
+
+	@Autowired
+	private Client sywmClient;
+
+	@Override
+	public void queryTree() throws Exception {
+
+		sywmClient.post(CommodityTypePath.QueryTree);
+	}
+}

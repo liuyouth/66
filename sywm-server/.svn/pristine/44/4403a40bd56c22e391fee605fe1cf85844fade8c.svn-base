@@ -1,0 +1,63 @@
+package com.rescam.sywm.server.service.commodityBase.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.rescam.common.server.dao.BaseDAO;
+import com.rescam.sywm.server.entity.CommodityType;
+import com.rescam.sywm.server.service.commodityBase.CommodityTypeService;
+import com.rescam.sywm.server.vo.ZTreeNode;
+
+@Service
+public class CommodityTypeServiceImpl implements CommodityTypeService {
+
+	@Autowired
+	private BaseDAO<CommodityType> commodityTypeDAO;
+
+	@Override
+	public ZTreeNode queryTree() {
+
+		CommodityType commodityType = commodityTypeDAO.get("from CommodityType where commodityTypeId = 1",
+				new Object[] {});
+
+		ZTreeNode root = new ZTreeNode();
+		root.setId(commodityType.getCommodityTypeId());
+		root.setpId(commodityType.getCommodityTypeParentId());
+		root.setName(commodityType.getCommodityTypeName());
+		root.setOpen(true);
+
+		List<ZTreeNode> children = getNodeChildren(root);
+
+		root.setChildren(children);
+
+		return root;
+	}
+
+	private List<ZTreeNode> getNodeChildren(ZTreeNode node) {
+
+		List<ZTreeNode> rootChildren = new ArrayList<ZTreeNode>();
+
+		String hql = "from CommodityType where commodityTypeParentId = ? and isDelete = 0";
+		List<CommodityType> CommodityTypeList = commodityTypeDAO.find(hql, new Object[] { node.getId() });
+
+		for (CommodityType commodityType : CommodityTypeList) {
+
+			ZTreeNode child = new ZTreeNode();
+			child.setId(commodityType.getCommodityTypeId());
+			child.setpId(commodityType.getCommodityTypeParentId());
+			child.setName(commodityType.getCommodityTypeName());
+			child.setOpen(false);
+
+			List<ZTreeNode> children = getNodeChildren(child);
+
+			child.setChildren(children);
+
+			rootChildren.add(child);
+		}
+
+		return rootChildren;
+	}
+}

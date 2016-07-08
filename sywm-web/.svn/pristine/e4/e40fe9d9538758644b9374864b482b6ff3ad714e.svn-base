@@ -1,0 +1,53 @@
+/**
+ * 
+ */
+
+$(function() {
+    $("div.wm-grid").click(function() {
+	// alert($(this).text());
+	$('#my-prompt').modal('open');
+    });
+
+    // 加载库区数据
+    $.ajax({
+	url : basePath + "/storageAreas/selectAllAreas",
+	data : {},
+	dataType : 'json',
+	success : function(data) {
+	    for (var i = 0; i < data.msg.length; i++) {
+		var span = document.createElement("span");
+		$(span).attr("class", "am-badge am-text-default");
+		$(span).text(data.msg[i].areasName);
+		$(span).attr("style",
+			"background-color:" + data.msg[i].areasColor);
+		$("#allAreas").append("\r\n").append(span);
+	    }
+	},
+	error : function() {
+	    alertWm("系统错误，请稍后再试。");
+	}
+    });
+
+    // 给分区货架绑定库区颜色
+    $.ajax({
+	url : basePath + "/storageRacks/selectAllRacks",
+	data : {},
+	dataType : 'json',
+	success : function(data) {
+	    for (var j = 0; j < data.msg.length; j++) {
+		$("#" + data.msg[j].storageRacksId).attr("data-racksType-wm",
+			data.msg[j].storageRacksType);
+		if (data.msg[j].storageAreas) {
+		    $("#" + data.msg[j].storageRacksId).attr(
+			    "style",
+			    "color:#fff;background-color:"
+				    + data.msg[j].storageAreas.areasColor);
+		}
+	    }
+	},
+	error : function() {
+	    alertWm("系统错误，请稍后再试。");
+	}
+    });
+
+});

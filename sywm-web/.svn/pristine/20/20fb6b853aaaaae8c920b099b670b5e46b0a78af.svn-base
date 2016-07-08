@@ -1,0 +1,60 @@
+$(function() {
+    // 切换导航状态
+    toggleNav(10, 2, 0);
+    readAuth();
+});
+function readAuth() {
+    $.ajax({
+	url : basePath + "/systemFunction/authList",
+	// data : $('#addForm').serialize(),
+	dataType : 'json',
+	type : 'post',
+	success : function(data) {
+
+	    addAuth(data)
+	},
+	error : function() {
+	    alertWm("系统错误，请稍后再试。");
+	}
+    });
+}
+function addAuth(data) {
+    var dataListStr="";
+    var list=data.children;
+    
+    for (var i = 0; i < list.length; i++) {
+	 var lc=list[i].children;
+	 dataListStr="";
+	 dataListStr += '<div class="am-g"><label  class="am-u-sm-3 am-form-label">'
+		    +list[i].systemFunctionName
+		    + ' </label>';
+	 
+	 if (lc.length==0) {
+	     dataListStr += '<div class="am-u-sm-9" style="padding-left: 30%"><label class="am-checkbox-inline">'
+		    +'<input type="checkbox" checked="checked" value="" >读'
+		    + '</label>'
+	            +'<label class="am-checkbox-inline"><input type="checkbox" checked="checked" value="" >写'
+	 	    + '</label> </div>'
+	     dataListStr += '</div>';
+	     $("#dataListInfo").append(dataListStr);
+	 }else{
+	     dataListStr += '</div>';
+	     $("#dataListInfo").append(dataListStr);
+	     //var c=list[i].children;
+	     for (var j = 0; j < lc.length; j++) {
+		 dataListStr="";
+		 dataListStr += '<div class="am-g"><div class="am-u-sm-3" style="padding-left:10%">'
+			    +lc[j].systemFunctionName
+			    + ' </div>'
+		 dataListStr += '<div class="am-u-sm-9" style="padding-left: 30%"><label class="am-checkbox-inline">'
+			    +'<input type="checkbox" checked="checked" value="" >读'
+			    + '</label>'
+		            +'<label class="am-checkbox-inline"><input type="checkbox" checked="checked" value="" >写'
+		 	    + '</label></div></div>'
+		            $("#dataListInfo").append(dataListStr);
+		}
+	 }    
+    }
+    $("#dataListInfo").append(dataListStr);
+   
+}

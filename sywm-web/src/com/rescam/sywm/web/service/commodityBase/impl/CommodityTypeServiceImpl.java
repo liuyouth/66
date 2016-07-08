@@ -1,0 +1,72 @@
+package com.rescam.sywm.web.service.commodityBase.impl;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.rescam.common.rs.Client;
+import com.rescam.common.web.service.impl.BaseServiceImpl;
+import com.rescam.sywm.rs.path.commodityBase.SYWMCommodityTypePath;
+import com.rescam.sywm.web.service.commodityBase.CommodityTypeService;
+
+@Service
+@Scope("prototype")
+public class CommodityTypeServiceImpl extends BaseServiceImpl implements CommodityTypeService {
+
+	@Autowired
+	private Client sywmClient;
+
+	@Override
+	public String queryTree() throws Exception {
+
+		return sywmClient.post(SYWMCommodityTypePath.QueryTree);
+	}
+
+	@Override
+	public String read(String commodityTypeId) throws Exception {
+
+		String filterString = "[\"commodityTypeId\",\"commodityTypeCode\",\"commodityTypeName\",\"commodityTypeParentId\",{\"storageAreas\":[\"storageAreasId\"]}]";
+
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("commodityTypeId", commodityTypeId);
+		map.put("filterString", filterString);
+
+		return sywmClient.post(SYWMCommodityTypePath.Read, map);
+	}
+
+	@Override
+	public void add(Map<String, String> params) throws Exception {
+
+		sywmClient.post(SYWMCommodityTypePath.Add, params);
+	}
+
+	@Override
+	public void update(Map<String, String> params) throws Exception {
+
+		sywmClient.post(SYWMCommodityTypePath.Update, params);
+	}
+
+	@Override
+	public void delete(String commodityTypeId) throws Exception {
+
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("commodityTypeId", commodityTypeId);
+
+		sywmClient.post(SYWMCommodityTypePath.Delete, map);
+	}
+
+	@Override
+	public String uniqueCommodityTypeName(Map<String, String> params) throws Exception {
+
+		return sywmClient.post(SYWMCommodityTypePath.UniqueCommodityTypeName, params);
+	}
+
+	@Override
+	public String uniqueCommodityTypeCode(Map<String, String> params) throws Exception {
+
+		return sywmClient.post(SYWMCommodityTypePath.UniqueCommodityTypeCode, params);
+	}
+}

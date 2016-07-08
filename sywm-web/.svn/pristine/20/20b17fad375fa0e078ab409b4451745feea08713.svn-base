@@ -1,0 +1,54 @@
+$(function() {
+	// 切换导航状态
+	toggleNav(6, 3, 0);
+});
+var zTreeObj;
+var setting = {
+	view : {
+		showLine : false,
+		showIcon : false
+	},
+	callback : {
+		onClick : function(event, treeId, treeNode, clickFlag) {
+			$("#showType").text(treeNode.name);
+		}
+	}
+};
+var zNodes = [ {
+	id : 0,
+	pid : 0,
+	name : "商品分类",
+	open : true,
+	children : [ {
+		id : 1,
+		pid : 0,
+		name : "厨房调料",
+		open : true,
+		children : [ {
+			id : 11,
+			pid : 1,
+			name : "粮油",
+			children : [ {
+				id : 111,
+				pid : 11,
+				name : "调和油"
+			}, {
+				id : 111,
+				pid : 11,
+				name : "色拉油"
+			} ]
+		}, {
+			id : 12,
+			pid : 1,
+			name : "酱油"
+		} ]
+	} ]
+} ];
+function showTypeModal() {
+	zTreeObj = $.fn.zTree.init($("#tree"), setting, zNodes);
+	$('#typeSelectModal').modal('open');
+}
+function showAddPackingModal() {
+	$('#addPackingForm').form('clear');
+	$('#addPackingModal').modal('open');
+}

@@ -1,0 +1,27 @@
+package com.rescam.sywm.server.service.commodityBase.impl;
+
+import java.io.Serializable;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.rescam.common.server.dao.BaseDAO;
+import com.rescam.sywm.server.entity.Brands;
+import com.rescam.sywm.server.service.commodityBase.BrandService;
+
+@Service
+public class BrandServiceImpl implements BrandService {
+	
+	@Autowired
+	private BaseDAO<Brands> dao;
+
+	@Override
+	public Serializable addBrand(Brands brands){
+		// TODO Auto-generated method stub
+		Serializable serializable = dao.save(brands);
+		
+		return serializable;
+	}
+
+
+}

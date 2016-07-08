@@ -1,0 +1,8 @@
+package com.rescam.sywm.rs.uri.commodityBase;
+
+public class SYWMBrandURI{
+	
+	public static final String Base = "brands";
+	
+	public static final String Add = "add";
+}

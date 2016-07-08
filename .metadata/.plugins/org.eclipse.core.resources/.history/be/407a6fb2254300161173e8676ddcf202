@@ -1,0 +1,122 @@
+package com.rescam.sywm.web.service.commodityBase.impl;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rescam.common.rs.Client;
+import com.rescam.common.vo.ResultInfo;
+import com.rescam.common.web.service.impl.BaseServiceImpl;
+import com.rescam.sywm.rs.path.commodityBase.SYWMBrandPath;
+import com.rescam.sywm.rs.path.goodsOwner.SYWMRecipientPath;
+import com.rescam.sywm.web.service.commodityBase.BrandService;
+
+@Service
+@Scope("prototype")
+public class CommodityBaseServiceImpl extends BaseServiceImpl implements BrandService {
+
+	@Autowired
+	private Client sywmClient;
+	
+	@Override
+	public void setUid(Integer uid) {
+		Field[] fields = getClass().getDeclaredFields();
+		for (Field field : fields) {
+			if (Client.class.isAssignableFrom(field.getType())) {
+				field.setAccessible(true);
+				try {
+					Client client = (Client) field.get(this);
+					client.setUidValue(uid);
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+
+	@Override
+	public String add(Map<String, String> params) throws Exception {
+		String response = sywmClient.post(SYWMBrandPath.Add, params);
+		return response;
+	}
+
+
+	@Override
+	public String read(Map<String, String> params) throws Exception {
+		//String response = sywmClient.post(SYWMBrandPath.Search);
+		String response = sywmClient.post(SYWMBrandPath.Read ,params);
+		return response;
+	}
+
+
+	@Override
+	public Long count(Map<String, String> params) throws Exception {
+		
+		String response = sywmClient.post(SYWMBrandPath.Count ,params);
+		ObjectMapper objectMapper = new ObjectMapper();
+		ResultInfo info = new ResultInfo();
+		info = objectMapper.readValue(response, ResultInfo.class);
+		if (info.isSuccess()) {
+
+			return Double.valueOf(info.getMsg().toString()).longValue();
+			
+		} else {
+
+			return 0L;
+		}
+	}
+
+
+	@Override
+	public List search(Map<String, String> params) throws Exception {
+		String response = sywmClient.post(SYWMBrandPath.Search, params);
+		ObjectMapper objectMapper = new ObjectMapper();
+		ResultInfo info = new ResultInfo();
+		info = objectMapper.readValue(response, ResultInfo.class);
+		if (info.isSuccess()) {
+
+			return (List) info.getMsg();
+		} else {
+
+			return new ArrayList<Object>();
+		}
+		
+	}
+
+
+	@Override
+	public String del(Map<String, String> params) throws Exception {
+		String response = sywmClient.post(SYWMBrandPath.Del, params);
+		return response;
+	}
+
+
+	@Override
+	public String unique(Map<String, String> params) throws Exception {
+
+		String response = sywmClient.post(SYWMBrandPath.Unique, params);
+		return response;
+	}
+
+
+	@Override
+	public String updata(Map<String, String> params) throws Exception {
+		
+		String response = sywmClient.post(SYWMBrandPath.Updata, params);
+		return response;	
+		
+	}
+	
+
+}

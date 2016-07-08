@@ -1,0 +1,104 @@
+/**
+ * 
+ */
+$(function() {
+    // 切换导航状态
+    toggleNav(9, 2, 0);
+
+    searchTableData();
+});
+
+function search() {
+    table.ajax.url(
+	    basePath + "/storageRacks/search?searchParam="
+		    + $.trim($("#searchParam").val())).load();
+}
+
+function searchTableData() {
+    table = $ShowListTable = $('#showListTable')
+	    .DataTable(
+		    {
+			"pageLength" : 25,
+			"lengthChange" : false,
+			"searching" : false,
+			"ordering" : false,
+			"processing" : true,
+			"serverSide" : true,
+			"ajax" : {
+			    "url" : basePath + "/storageRacks/search",
+			    "type" : "POST"
+			},
+			"columns" : [
+				{
+				    "data" : "storageRacksId",
+				    "render" : function(data, type, row, meta) {
+					return '<input type="checkbox" class="ckClassFlg">';
+				    }
+				},
+
+				{
+				    "data" : "storageRacksCode",
+				    "render" : function(data, type, row, meta) {
+					return '<span>' + data + "</span>";
+				    }
+				},
+				{
+				    "data" : "storageRacksType",
+				    "render" : function(data, type, row, meta) {
+					if(data==10){
+					    return  '<span >' + "标准横梁式" + "</span>";
+					} else if(data==11){
+					    return '<span >' + "横梁式（被立柱所挡，不可用）" + "</span>";
+					} else if(data==12){
+					    return '<span >' + "横梁式（被横梁所挡，上3层不可用）" + "</span>";
+					} else if(data==13){
+					    return '<span >' + "横梁式（下层拆零货架）" + "</span>";
+					} else if(data==14){
+					    return '<span >' + "横梁式（隧道式，上3层可用）" + "</span>";
+					} else if(data==20){
+					    return '<span >' + "标准驶入式 " + "</span>";
+					} else {
+					    return '<span >' + "数据错误 " + "</span>";
+					}
+				    }
+				},
+				{
+				    "data" : "goodsLocatorCount",
+				    "render" : function(data, type, row, meta) {
+					return '<span>' + data + "</span>";
+				    }
+				},
+				{
+				    "data" : "isEnable",
+				    "render" : function(data, type, row, meta) {
+					if (data) {
+					    return '<span class="am-badge am-badge-success">启用</span>';
+					} else {
+					    return '<span class="am-badge am-badge-danger">停用</span>';
+					}
+				    }
+				},
+				{
+				    "data" : "storageRacksId",
+				    "render" : function(data, type, row, meta) {
+					return '<div class="am-u-sm-12" style="text-align: center;">'
+						+ '<div class="am-btn-group am-btn-group-xs">'
+						+ '<button title="编辑货架" class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="location.href=\''
+						+ basePath
+						+ '/warehouse/racks/edit/view?storageRacksId='
+						+ data
+						+ '\'">'
+						+ '<span class="am-icon-pencil-square-o"></span>编辑</button>'
+						+ '</div></div>';
+				    }
+				} ]
+		    });
+}
+
+function selectAll(){
+	if($("#allCheckbox").is(":checked")){
+		$(".ckClassFlg").prop('checked',true);
+	}else{
+		$(".ckClassFlg").prop('checked',false);
+	}
+}

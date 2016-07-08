@@ -1,0 +1,102 @@
+var $ShowListTable;
+$(function() {
+	// 切换导航状态
+	toggleNav(6, 0, 0);
+	searchTableData();
+});
+function searchTableData() {
+	$ShowListTable = $('#showListTable')
+			.DataTable(
+					{
+						"pageLength" : 10,
+						"lengthChange" : false,
+						"pagingType" : "full_numbers",
+						"searching" : false,
+						"ordering" : false,
+						"processing" : true,
+						"serverSide" : true,
+						"ajax" : {
+							url : basePath + "/recipient/search",
+							type : "POST",
+							data : {},
+
+						},
+						"columns" : [
+								/*	            {	
+								 "data": "a",
+								 width:"5%",
+								 "render":function ( data, type, row, meta ) {
+								 return '<input type="checkbox" class="ckClassFlg" name="aIdChk" value="'+data+'"/>';
+								 }
+								 },*/
+								{
+									"data" : "recipientName",
+									"render" : function(data, type, row, meta) {
+										return '<span>' + data + "</span>";
+									}
+								},
+								{
+									"data" : "recipientCode",
+									"render" : function(data, type, row, meta) {
+										return '<span>' + data + "</span>";
+									}
+								},
+								{
+									"data" : "recipientAddress",
+									"render" : function(data, type, row, meta) {
+										return '<span >' + data + "</span>";
+									}
+								},
+								{
+									"data" : "recipientContact",
+									"render" : function(data, type, row, meta) {
+										return '<span>' + data + "</span></td>";
+									}
+								},
+								{
+									"data" : "recipientContactPhone",
+									"render" : function(data, type, row, meta) {
+										return '<span>' + data + "</span>";
+									}
+								},
+
+								{
+									"data" : "recipientId",
+									"width" : "12%",
+									"render" : function(data, type, row, meta) {
+										return '<div class="am-btn-toolbar">'
+												+ '<div class="am-btn-group am-btn-group-xs">'
+												+ '<button class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="location.href=\'${basePath}/recipient/edit/view?id='
+												+ data
+												+ '\'">'
+												+ '<span class="am-icon-pencil-square-o"></span></button>'
+												+ '<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" onclick="del('
+												+ data
+												+ ')">'
+												+ '<span class="am-icon-trash-o"></span></button>'
+												+ '</div></div>';
+									}
+								} ]
+					});
+}
+function del(id) {
+	$.ajax({
+		url : basePath + "/recipient/delete/"+id,
+		data : {
+			recipientIds : id
+		},
+		dataType : "json",
+		type : "post",
+		success : function(data) {
+			if (data.success) {
+				alert("保存成功");
+			} else {
+				alert(data.msg);
+			}
+		},
+
+		error : function() {
+			alert("请求失败");
+		}
+	});
+}

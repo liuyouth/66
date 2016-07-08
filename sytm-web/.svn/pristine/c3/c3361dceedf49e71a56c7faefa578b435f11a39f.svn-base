@@ -1,0 +1,29 @@
+function alertWm(msg, okfn) {
+	$("#wm-alert-modal-show-msg-span").text(msg);
+	$('#wm-alert').on('closed.modal.amui', function() {
+		okfn();
+	});
+	$('#wm-alert').modal('open');
+}
+
+function confirmWm(msg, okfn, ngfn) {
+	$("#wm-confirm-modal-show-msg-span").text(msg);
+	$('#wm-confirm').modal({
+		relatedTarget : this,
+		onConfirm : function(options) {
+			okfn();
+		},
+		onCancel : function() {
+			ngfn();
+		}
+	});
+	$('#wm-confirm').modal('open');
+}
+
+function showLoadingWm() {
+	$('#wm-modal-loading').modal('open');
+}
+
+function hideLoadingWm() {
+	$('#wm-modal-loading').modal('close');
+}

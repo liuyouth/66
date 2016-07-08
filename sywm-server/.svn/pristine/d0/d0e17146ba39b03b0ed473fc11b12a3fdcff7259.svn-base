@@ -1,0 +1,11 @@
+package com.rescam.sywm.server.service.commodityBase;
+
+import java.io.Serializable;
+
+import com.rescam.sywm.server.entity.Brands;
+
+public interface BrandService {
+	
+	public Serializable addBrand(Brands brands);
+
+}

@@ -1,0 +1,175 @@
+$(function() {
+	// 切换导航状态
+	toggleNav(6, 3, 0);
+	// 加载品牌KV
+	brandsKV();
+	// 初始化表单验证
+	initValidForm();
+});
+var typeId;
+var typeName;
+
+var $valid;
+// 初始化表单验证
+function initValidForm() {
+	$valid = $("#addForm").Validform({
+		btnSubmit : "#submitBtn",
+		tiptype : 3,
+		ignoreHidden : true,
+		dragonfly : false,
+		tipSweep : false,
+		showAllError : true,
+		postonce : true,
+		ajaxPost : false,
+		datatype : {
+
+		},
+		usePlugin : {},
+		beforeCheck : function(curform) {
+		},
+		beforeSubmit : function(curform) {
+			/*
+			 * if ($("#operate").val() == "add") { submitAdd(); } else if
+			 * ($("#operate").val() == "update") { submitUpdate(); }
+			 */
+			submit();
+			return false;
+		},
+		callback : function(data) {
+		}
+	});
+}
+// 为form表单绑定提交事件
+function submit() {
+	$("#submitBtn").attr("disabled", "disabled ");
+	$.ajax({
+		url : basePath + "/commodityBase/add",
+		data : $("#addForm").serialize(),
+		dataType : "json",
+		type : "post",
+		success : function(data) {
+			if (data.success) {
+				alert("保存成功！即将跳转之列表页");
+				window.location.href = basePath + "/commodity/base/edit/view?id="+data.msg;
+			} else {
+				alertWm(data.msg);
+			}
+		},
+
+		error : function() {
+			alertWm("请求失败");
+		}
+	});
+
+};
+var zTreeObj;
+var setting = {
+	view : {
+		showLine : false,
+		showIcon : false
+	},
+	callback : {
+		onClick : function(event, treeId, treeNode, clickFlag) {
+			if (treeNode.id != 1) {
+				typeId = treeNode.id;
+				typeName = treeNode.name;
+				$("#showType").text(treeNode.name);
+				$("#showError").text("");
+			}
+		}
+	}
+};
+
+// 加载商品分类树
+function initZTree() {
+	$.ajax({
+		url : basePath + '/commodityType/queryTree',
+		data : {
+
+		},
+		dataType : 'json',
+		success : function(data) {
+			// 初始化zTree
+			zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
+			
+		},
+		error : function() {
+			alertWm("系统错误，请稍后再试。");
+		}
+	});
+}
+// 加载品牌KV
+function brandsKV() {
+	$.ajax({
+		url : basePath + '/brands/kv',
+		data : {
+
+		},
+		dataType : 'json',
+		success : function(data) {
+			var $select = $("#brandsIdSelect");
+			if (data.length >0) {
+				$.each(data, function(i, v) {
+					var option = document.createElement("option");
+					$(option).val(v.value).text(v.text).appendTo($select);
+				});
+			} else {
+				alertWm("请先添加品牌数据！");
+			}
+			// 加载库区KV
+			loadStorageAreasKV();
+
+		},
+		error : function() {
+			alertWm("系统错误，请稍后再试。");
+		}
+	});
+}
+// 加载库区KV
+function loadStorageAreasKV() {
+	$.ajax({
+		url : basePath + '/storageAreas/kv',
+		data : {
+
+		},
+		dataType : 'json',
+		success : function(data) {
+			var $select = $("#storageAreasIdSelect");
+			$.each(data, function(i, v) {
+				var option = document.createElement("option");
+				$(option).val(v.value).text(v.text).appendTo($select);
+			});
+			// 加载商品分类树
+			initZTree();
+		},
+		error : function() {
+			alertWm("系统错误，请稍后再试。");
+		}
+	});
+}
+// 打开分类框
+function showTypeModal() {
+	$('#typeSelectModal').modal('open');
+}
+function hideTypeModal() {
+	$('#typeSelectModal').modal('close');
+}
+// 选中分类框
+function selectedType() {
+	if (typeId == "" || typeId == null) {
+		$("#showError").text("请选择分类！");
+	} else {
+		$("#showError").text("");
+		var cnArray = typeName.split(" ");
+		$("[name='commodityTypeCode']").val(cnArray[0]);
+		$("[name='commodityTypeName']").val(cnArray[1]);
+		$("[name='commodityType.commodityTypeId']").val(typeId);
+		hideTypeModal();
+		validDate("commoditytypeName");
+	}
+
+}
+//校验单个输入框 （校验的Id）
+function validDate(id) {
+    $valid.check(true, ("#" + id));
+}

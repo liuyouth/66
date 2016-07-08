@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+$(function() {
+	// 切换导航状态
+	toggleNav(9, 3, 0);
+
+	//searchTableData();
+});

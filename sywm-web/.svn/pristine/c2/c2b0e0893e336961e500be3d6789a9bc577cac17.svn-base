@@ -1,0 +1,53 @@
+var $valid;
+
+$(function() {
+	// 切换导航状态
+	toggleNav(6, 2, 0);
+
+	$valid = $("#addForm").Validform({
+		btnSubmit : "#submitBtn",
+		tiptype : 4,
+		ignoreHidden : true,
+		dragonfly : false,
+		tipSweep : false,
+		showAllError : true,
+		postonce : true,
+		ajaxPost : false,
+		datatype : {
+
+		},
+		usePlugin : {},
+		beforeCheck : function(curform) {
+
+		},
+		beforeSubmit : function(curform) {
+
+			submit();
+			return false;
+		},
+		callback : function(data) {
+		}
+	});
+
+});
+
+function submit() {
+
+	$.ajax({
+		type : "POST",
+		url : basePath + "/brands/add",
+		data : $('#addForm').serialize(),
+		dataType : "json",
+		success : function(msg) {
+			
+			if (msg.success) {
+				
+				confirmWm("确认删除？", function() {
+				window.location.href = basePath + "/commodity/brands/list/view";
+				})
+			}
+		}
+	});
+
+};
+

@@ -1,0 +1,7 @@
+package com.rescam.sywm.server.service.warehouse;
+
+public interface StorageAreasService {
+	
+	
+
+}

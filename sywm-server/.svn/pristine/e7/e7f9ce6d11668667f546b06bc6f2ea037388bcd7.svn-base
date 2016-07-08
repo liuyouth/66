@@ -1,0 +1,8 @@
+package com.rescam.sywm.server.service.system;
+
+import java.io.Serializable;
+import com.rescam.sywm.server.entity.UserInfo;
+
+public interface UserInfoService {
+	Serializable add(UserInfo userInfo);
+}

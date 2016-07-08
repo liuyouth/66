@@ -1,0 +1,9 @@
+package com.rescam.sywm.web.service.warehouse;
+
+import com.rescam.common.web.service.BaseService;
+
+public interface StorageAreasService extends BaseService{
+	
+	public void search() throws Exception;
+
+}

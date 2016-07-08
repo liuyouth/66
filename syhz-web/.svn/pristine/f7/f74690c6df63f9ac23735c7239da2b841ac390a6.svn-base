@@ -1,0 +1,305 @@
+body {
+	
+}
+
+fieldset {
+	margin: 0 0 0.7rem 0 !important;
+	padding: 0 !important;
+}
+
+legend {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+textarea {
+	resize: none !important;
+}
+
+.wm-container {
+	width: 100% !important;
+	min-width: 1300px !important;
+	max-width: 100% !important;
+}
+
+.wm-breadcrumb {
+	margin: 0 !important;
+	padding-bottom: 0;
+}
+
+.wm-form {
+	padding: 10px 0;
+}
+
+.wm-hr {
+	margin: 5px 0px !important;
+	border-top: 1px solid #ddd;
+}
+
+.wm-nav-active {
+	background-color: #0e90d2 !important;
+}
+
+.wm-nav-active a {
+	color: #fff;
+}
+
+.wm-modal-bd {
+	padding-top: 15px !important;
+	border-top: 1px solid #dedede;
+}
+
+.wm-modal-btn {
+	display: table-cell !important;
+	padding: 0 5px;
+	height: 44px;
+	-webkit-box-sizing: border-box !important;
+	box-sizing: border-box !important;
+	font-size: 1.6rem;
+	line-height: 44px;
+	text-align: center;
+	color: #0e90d2;
+	display: block;
+	word-wrap: normal;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	cursor: pointer;
+	border-right: 1px solid #dedede;
+}
+
+.wm-modal-cancel-btn {
+	color: #999;
+}
+
+.wm-toTop {
+	border: 1px solid #DDDDDD;
+	width: 46px;
+	height: 50px;
+	position: fixed;
+	bottom: 150px;
+	right: 30px;
+	z-index: 1009;
+	background-color: white;
+}
+
+.wm-toTop:HOVER {
+	cursor: pointer;
+}
+
+.wm-toTop a:HOVER {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.wm-toTop i {
+	color: #DDDDDD;
+}
+
+.wm-toTop i:HOVER {
+	color: #999;
+}
+
+.wm-toTop i:BEFORE {
+	font-size: 300%;
+	vertical-align: -22%;
+}
+
+.wm-table {
+	margin-bottom: 0;
+}
+
+.wm-panel {
+	margin-top: 30px;
+}
+/* lisi start */
+.wm-inner-table-title {
+	border-bottom: 1px solid #10a0ea;
+}
+
+.wm-inner-table-title-label {
+	background-color: #10a0ea;
+	color: #fff;
+	margin: 0px;
+	padding: .6em 1em;
+	vertical-align: middle;
+	line-height: 1.2;
+	outline: 0;
+}
+/* top view start */
+.wm-u-sm-12 {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.wm-grid {
+	border: 1px solid #999;
+	text-align: center;
+	vertical-align: middle;
+	float: left;
+}
+
+div.wm-grid:HOVER {
+	cursor: pointer;
+}
+
+.wm-grid-a {
+	width: 60px;
+	height: 25px;
+}
+
+.wm-grid-e1 {
+	width: 40px;
+	height: 100px;
+}
+
+.wm-grid-e2 {
+	width: 40px;
+	height: 50px;
+}
+
+.wm-grid-e3 {
+	width: 40px;
+	height: 75px;
+}
+
+.wm-empty-line {
+	height: 25px;
+}
+
+.wm-cell-disable {
+	background-color: #999;
+	color: #fff;
+}
+
+.wm-grid-a-cell {
+	width: 50%;
+	height: 50px;
+}
+
+.wm-grid-e1-cell {
+	width: 25%;
+	height: 50px;
+}
+
+.wm-grid-e2-cell {
+	width: 50%;
+	height: 50px;
+}
+
+.wm-grid-e3-cell {
+	width: 33.33%;
+	height: 50px;
+}
+
+.wm-grid-a-cell-split-x {
+	width: 50%;
+	float: left;
+}
+
+.wm-grid-a-cell-split-line-x {
+	border-right: thin dashed #999;
+}
+
+.wm-grid-a-cell-split-y {
+	width: 100%;
+	height: 25px;
+}
+
+.wm-grid-a-cell-split-line-y {
+	border-bottom: thin dashed #999;
+}
+/* top view end */
+[class*=am-icon-] {
+	margin-right: 1px;
+}
+
+.Validform_checktip {
+	/*margin-left: 8px;
+	line-height: 20px;
+	height: 20px;
+	overflow: hidden;
+	color: #999;
+	font-size: 12px;*/
+}
+
+.Validform_right {
+	color: #71b83d;
+	padding-left: 20px;
+	background: url(../images/right.png) no-repeat left center;
+}
+
+.Validform_wrong {
+	color: red;
+	padding-left: 20px;
+	white-space: nowrap;
+	background: url(../images/error.png) no-repeat left center;
+}
+
+.Validform_loading {
+	padding-left: 20px;
+	background: url(../images/onLoad.gif) no-repeat left center;
+}
+
+.Validform_error {
+	background-color: #ffe7e7;
+}
+
+#Validform_msg {
+	color: #7d8289;
+	font: 12px/1.5 tahoma, arial, \5b8b\4f53, sans-serif;
+	width: 280px;
+	-webkit-box-shadow: 2px 2px 3px #aaa;
+	-moz-box-shadow: 2px 2px 3px #aaa;
+	background: #fff;
+	position: absolute;
+	top: 0px;
+	right: 50px;
+	z-index: 99999;
+	display: none;
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=3, Direction=135,
+		Color='#999999');
+}
+
+#Validform_msg .iframe {
+	position: absolute;
+	left: 0px;
+	top: -1px;
+	z-index: -1;
+}
+
+#Validform_msg .Validform_title {
+	line-height: 25px;
+	height: 25px;
+	text-align: left;
+	font-weight: bold;
+	padding: 0 8px;
+	color: #fff;
+	position: relative;
+	background-color: #000;
+}
+
+#Validform_msg a.Validform_close:link, #Validform_msg a.Validform_close:visited
+	{
+	line-height: 22px;
+	position: absolute;
+	right: 8px;
+	top: 0px;
+	color: #fff;
+	text-decoration: none;
+}
+
+#Validform_msg a.Validform_close:hover {
+	color: #cc0;
+}
+
+#Validform_msg .Validform_info {
+	padding: 8px;
+	border: 1px solid #000;
+	border-top: none;
+	text-align: left;
+}
+/* lisi end */
+
+/* mujianling start */
+/* mujianling end */

@@ -1,0 +1,33 @@
+package com.rescam.sywm.web.service.commodityBase.impl;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.rescam.common.rs.Client;
+import com.rescam.common.vo.ResultInfo;
+import com.rescam.sywm.rs.path.commodityBase.SYWMBrandPath;
+import com.rescam.sywm.web.service.commodityBase.BrandService;
+
+@Service
+@Scope("prototype")
+public class BrandServiceImpl implements BrandService {
+
+	@Autowired
+	private Client sywmClient;
+	
+	@Override
+	public void search() throws Exception {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String add(Map<String, String> params) throws Exception {
+		// TODO Auto-generated method stub
+		return sywmClient.post(SYWMBrandPath.Add, params);
+	}
+
+}

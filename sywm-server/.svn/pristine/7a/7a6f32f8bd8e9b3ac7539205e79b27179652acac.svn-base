@@ -1,0 +1,29 @@
+package com.rescam.sywm.server.vo;
+
+import java.util.List;
+
+import com.rescam.sywm.server.entity.SystemFunction;
+
+public class SystemFunctionVo {
+	private Integer systemFunctionId;
+	private String systemFunctionName;
+	private List<SystemFunction> children;
+	public Integer getSystemFunctionId() {
+		return systemFunctionId;
+	}
+	public void setSystemFunctionId(Integer systemFunctionId) {
+		this.systemFunctionId = systemFunctionId;
+	}
+	public String getSystemFunctionName() {
+		return systemFunctionName;
+	}
+	public void setSystemFunctionName(String systemFunctionName) {
+		this.systemFunctionName = systemFunctionName;
+	}
+	public List<SystemFunction> getChildren() {
+		return children;
+	}
+	public void setChildren(List<SystemFunction> children) {
+		this.children = children;
+	}
+}

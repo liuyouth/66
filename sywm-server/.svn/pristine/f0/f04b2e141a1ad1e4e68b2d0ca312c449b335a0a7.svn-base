@@ -1,0 +1,17 @@
+package com.rescam.sywm.server.service.warehouse;
+
+import java.util.List;
+import java.util.Map;
+
+import com.rescam.common.vo.ResultInfo;
+import com.rescam.sywm.server.entity.StorageAreas;
+
+public interface StorageAreasService {
+	
+	Long getCount(Map<String, String> params) throws Exception;
+
+	List<StorageAreas> search(Map<String, String> params) throws Exception;
+
+	ResultInfo uniqueStorageAreasName(Map<String, String> params) throws Exception;
+
+}

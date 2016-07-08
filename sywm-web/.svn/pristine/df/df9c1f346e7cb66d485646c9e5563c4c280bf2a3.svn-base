@@ -1,0 +1,15 @@
+package com.rescam.sywm.web.service.commodityBase;
+
+import java.util.Map;
+
+import com.rescam.common.web.service.BaseService;
+
+public interface BrandService extends BaseService{
+	
+
+	String add(Map<String, String> params) throws Exception;
+
+	
+	
+
+}

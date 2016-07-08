@@ -1,0 +1,26 @@
+package com.rescam.sywm.web.service.commodityBase;
+
+import java.util.List;
+import java.util.Map;
+
+import com.rescam.common.web.service.BaseService;
+
+public interface BrandService extends BaseService {
+
+	public void del(String brandsId) throws Exception;
+
+	public void add(Map<String, String> params) throws Exception;
+
+	public String read(Map<String, String> params) throws Exception;
+
+	public Long count(Map<String, String> params) throws Exception;
+
+	public List<Map<String, String>> search(Map<String, String> params) throws Exception;
+
+	public String unique(Map<String, String> params) throws Exception;
+
+	public String updata(Map<String, String> params) throws Exception;
+
+	public String queryKV() throws Exception;
+
+}

@@ -1,0 +1,21 @@
+package com.rescam.sywm.web.service.warehouse.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.rescam.common.rs.Client;
+import com.rescam.common.web.service.impl.BaseServiceImpl;
+import com.rescam.sywm.rs.path.warehouse.SYWMStorageAreasPath;
+import com.rescam.sywm.web.service.warehouse.StorageAreasService;
+
+public class StorageAreasServiceImpl extends BaseServiceImpl implements StorageAreasService{
+
+	@Autowired
+	private Client sywmClient;
+
+	@Override
+	public void search() throws Exception {
+		sywmClient.post(SYWMStorageAreasPath.Search);
+	}
+
+
+}

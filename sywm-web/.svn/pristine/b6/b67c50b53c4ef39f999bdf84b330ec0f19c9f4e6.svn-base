@@ -1,0 +1,71 @@
+$(function() {
+	// 切换导航状态
+	toggleNav(10, 2, 0);
+	read();
+	initValidForm();
+});
+function read(){
+    $.ajax({
+	url : basePath + "/userGroup/read/"+userGroupId,
+	type : 'post',
+	cache : false,
+	dataType : 'json',
+	success : function(data) {
+	    $("#typeForm").form('load', data);		
+	},
+	error : function() {
+		alertWm("系统错误，请稍后再试。");
+	}
+});
+}
+//初始化表单验证
+function initValidForm() {
+	$("#typeForm").Validform({
+		btnSubmit : "#submitBtn",
+		tiptype : 4,
+		ignoreHidden : true,
+		dragonfly : false,
+		tipSweep : false,
+		showAllError : true,
+		postonce : true,
+		ajaxPost : false,
+		datatype : {
+
+		},
+		usePlugin : {},
+		beforeCheck : function(curform) {
+		},
+		beforeSubmit : function(curform) {
+		    submitUpdate();
+		    return false;
+		},
+		callback : function(data) {
+		}
+	});
+}
+//新增提交
+function submitUpdate() {
+	
+	$.ajax({
+		url : basePath + "/userGroup/update",
+		data : $('#typeForm').serialize(),
+		dataType : 'json',
+		type : 'post',
+		success : function(data) {
+		    if (data.success) {
+			alertWm("修改成功",okBack);
+			
+		    }else{
+			alertWm(data.msg);
+		    }
+			
+		},
+		error : function() {
+			alertWm("系统错误，请稍后再试。");
+		}
+	});
+};
+//新增后点击确定的回调
+function okBack(){
+    window.location.href = basePath + "/user_auth/userGroupList/view";
+}

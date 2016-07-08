@@ -1,0 +1,13 @@
+package com.rescam.sywm.rs.uri.warehouse;
+
+public class SYWMStorageAreasURI {
+	
+	public static final String Base = "storageAreas";
+
+	public static final String Search = "search";
+	
+	public static final String Count = "count";
+	
+	public static final String UniqueStorageAreasName = "uniqueStorageAreasName";
+	
+}

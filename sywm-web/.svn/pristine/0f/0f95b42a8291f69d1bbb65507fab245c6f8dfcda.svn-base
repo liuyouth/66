@@ -1,0 +1,298 @@
+body {
+	
+}
+
+fieldset {
+	margin: 0 0 0.7rem 0 !important;
+	padding: 0 !important;
+}
+
+legend {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+textarea {
+	resize: none !important;
+}
+
+.wm-container {
+	width: 100% !important;
+	min-width: 1300px !important;
+	max-width: 100% !important;
+}
+
+.wm-breadcrumb {
+	margin: 0 !important;
+	padding-bottom: 0;
+}
+
+.wm-form {
+	padding: 10px 0;
+}
+
+.wm-hr {
+	margin: 5px 0px !important;
+	border-top: 1px solid #ddd;
+}
+
+.wm-nav-active {
+	background-color: #0e90d2 !important;
+}
+
+.wm-nav-active a {
+	color: #fff;
+}
+
+.wm-modal-bd {
+	padding-top: 15px !important;
+	border-top: 1px solid #dedede;
+}
+
+.wm-modal-btn {
+	display: table-cell !important;
+	padding: 0 5px;
+	height: 44px;
+	-webkit-box-sizing: border-box !important;
+	box-sizing: border-box !important;
+	font-size: 1.6rem;
+	line-height: 44px;
+	text-align: center;
+	color: #0e90d2;
+	display: block;
+	word-wrap: normal;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	cursor: pointer;
+	border-right: 1px solid #dedede;
+}
+
+.wm-modal-cancel-btn {
+	color: #999;
+}
+
+.wm-toTop {
+	border: 1px solid #DDDDDD;
+	width: 46px;
+	height: 50px;
+	position: fixed;
+	bottom: 150px;
+	right: 30px;
+	z-index: 1009;
+	background-color: white;
+}
+
+.wm-toTop:HOVER {
+	cursor: pointer;
+}
+
+.wm-toTop a:HOVER {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.wm-toTop i {
+	color: #DDDDDD;
+}
+
+.wm-toTop i:HOVER {
+	color: #999;
+}
+
+.wm-toTop i:BEFORE {
+	font-size: 300%;
+	vertical-align: -22%;
+}
+
+.wm-table {
+	margin-bottom: 0;
+}
+
+.wm-panel {
+	margin-top: 30px;
+}
+/* lisi start */
+.wm-inner-table-title {
+	border-bottom: 1px solid #10a0ea;
+}
+
+.wm-inner-table-title-label {
+	background-color: #10a0ea;
+	color: #fff;
+	margin: 0px;
+	padding: .6em 1em;
+	vertical-align: middle;
+	line-height: 1.2;
+	outline: 0;
+}
+/* top view start */
+.wm-u-sm-12 {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.wm-grid {
+	border: 1px solid #999;
+	text-align: center;
+	vertical-align: middle;
+	float: left;
+}
+
+div.wm-grid:HOVER {
+	cursor: pointer;
+}
+
+.wm-grid-a {
+	width: 60px;
+	height: 25px;
+}
+
+.wm-grid-e1 {
+	width: 40px;
+	height: 100px;
+}
+
+.wm-grid-e2 {
+	width: 40px;
+	height: 50px;
+}
+
+.wm-grid-e3 {
+	width: 40px;
+	height: 75px;
+}
+
+.wm-empty-line {
+	height: 25px;
+}
+
+.wm-cell-disable {
+	background-color: #999;
+	color: #fff;
+}
+
+.wm-grid-a-cell {
+	width: 50%;
+	height: 50px;
+}
+
+.wm-grid-e1-cell {
+	width: 25%;
+	height: 50px;
+}
+
+.wm-grid-e2-cell {
+	width: 50%;
+	height: 50px;
+}
+
+.wm-grid-e3-cell {
+	width: 33.33%;
+	height: 50px;
+}
+
+.wm-grid-a-cell-split-x {
+	width: 50%;
+	float: left;
+}
+
+.wm-grid-a-cell-split-line-x {
+	border-right: thin dashed #999;
+}
+
+.wm-grid-a-cell-split-y {
+	width: 100%;
+	height: 25px;
+}
+
+.wm-grid-a-cell-split-line-y {
+	border-bottom: thin dashed #999;
+}
+/* top view end */
+[class*=am-icon-] {
+	margin-right: 1px;
+}
+/* tree start */
+.wm-ztree * {
+	font-size: 1.6rem !important;
+	font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial,
+		"Microsoft YaHei", FreeSans, Arimo, "Droid Sans",
+		"wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3",
+		FontAwesome, sans-serif !important;
+}
+
+.wm-ztree li {
+	line-height: 1.6 !important;
+}
+
+.wm-ztree li a {
+	width: 200px !important;
+	height: 30px !important;
+}
+
+.wm-ztree li a:hover {
+	text-decoration: none !important;
+	background-color: #E7E7E7 !important;
+}
+
+.wm-ztree li a span.button.switch {
+	visibility: hidden !important;
+}
+
+.wm-ztree.showIcon li a span.button.switch {
+	visibility: visible !important;
+}
+
+.wm-ztree li a.curSelectedNode {
+	color: #ffffff !important;
+	background-color: #0e90d2 !important;
+	border: 0 !important;
+	height: 30px !important;
+	background-color: #0e90d2 !important;
+}
+
+.wm-ztree li span {
+	line-height: 30px !important;
+}
+
+.wm-ztree li a.level0 span {
+	font-size: 150% !important;
+	font-weight: bold !important;
+}
+
+.wm-ztree li span.button {
+	background-image: url("../images/left_menuForOutLook.png") !important;
+	*background-image: url("../images/left_menuForOutLook.gif") !important;
+}
+
+.wm-ztree li span.button.switch.level0 {
+	width: 20px !important;
+	height: 20px !important;
+}
+
+.wm-ztree li span.button.switch.level1 {
+	width: 20px !important;
+	height: 20px !important;
+}
+
+.wm-ztree li span.button.noline_open {
+	background-position: 0 0 !important;
+}
+
+.wm-ztree li span.button.noline_close {
+	background-position: -18px 0 !important;
+}
+
+.wm-ztree li span.button.noline_open.level0 {
+	background-position: 0 -18px !important;
+}
+
+.wm-ztree li span.button.noline_close.level0 {
+	background-position: -18px -18px !important;
+}
+/* tree end */
+/* lisi end */
+
+/* mujianling start */
+/* mujianling end */

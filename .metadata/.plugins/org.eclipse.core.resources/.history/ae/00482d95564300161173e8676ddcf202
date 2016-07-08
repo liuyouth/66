@@ -1,0 +1,108 @@
+package com.rescam.sywm.server.service.commodityBase.impl;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.rescam.common.server.dao.BaseDAO;
+import com.rescam.sywm.server.entity.Brands;
+import com.rescam.sywm.server.entity.CommodityBase;
+import com.rescam.sywm.server.service.commodityBase.CommodityBaseService;
+
+@Transactional
+@Service("declfromlistService")
+public class CommodityBaseServiceImpl implements CommodityBaseService {
+	@Resource
+	BaseDAO<CommodityBase> dao;
+	@Resource
+	BaseDAO<Brands> daoBrands;
+
+	@Override
+	public Long getCount(Map<String, String> params) throws Exception {
+		String hql = "select count(1) from CommodityBase ";
+		String searchCode = params.get("searchCode");
+		if (searchCode != null & searchCode != "") {
+			hql += "where commodityBaseCode like '%" + searchCode + "%' ";
+		}
+		/* hql += " order by commodityBaseId desc "; */
+		return dao.count(hql);
+	}
+
+	@Override
+	public List<CommodityBase> search(Map<String, String> params)
+			throws Exception {
+		String hql = "from CommodityBase ";
+		String searchCode = params.get("searchCode");
+		int page = Integer.valueOf((params.get("page")));
+		int rows = Integer.valueOf((params.get("length")));
+		if (searchCode != null & searchCode != "") {
+			hql += "where commodityBaseCode like '%" + searchCode + "%' ";
+		}
+
+		/* hql += " order by commodityBaseId desc "; */
+		return dao.find(hql, new Object[0], page, rows);
+	}
+
+	@Override
+	public List<CommodityBase> read(Map<String, String> params)
+			throws Exception {
+
+		String hql = "from CommodityBase where commodityBaseId = "
+				+ params.get("commodityBaseId");
+
+		return dao.find(hql);
+
+	}
+
+	@Override
+	public void delete(String id) {
+		String hql = "delete from CommodityBase where commodityBaseId = " + id;
+		dao.executeHql(hql);
+	}
+
+	@Override
+	public Serializable add(CommodityBase commodityBase) {
+		Brands brands = new Brands();
+		brands = daoBrands.get(Brands.class, commodityBase.getBrands().getBrandsId());
+		commodityBase.setBrands(brands);
+		Serializable serializable = dao.save(commodityBase);
+
+		return serializable;
+
+	}
+
+	@Override
+	public Boolean update(CommodityBase commodityBase) {
+
+		Boolean result = false;
+		dao.update(commodityBase);
+		result = true;
+
+		return result;
+	}
+
+	@Override
+	public Boolean unique(Map<String, String> params) throws Exception {
+		Boolean flg = true;
+		String goodsOwnerId = params.get("goodsOwnerId");
+		String commodityBaseName = params.get("param");
+		String hql = "from CommodityBase ";
+		/*
+		 * where goodsOwner.goodsOwnerId =" + goodsOwnerId
+		 */
+		List<CommodityBase> list = dao.find(hql);
+		for (int i = 0; i < list.size(); i++) {
+			CommodityBase commodityBase = list.get(i);
+			if (commodityBase.getCommodityName().equals(commodityBaseName)) {
+				flg = false;
+				break;
+			}
+		}
+		return flg;
+	}
+}

@@ -1,0 +1,71 @@
+$(function() {
+	// 切换导航状态
+	toggleNav(8, 1, 0);
+	read();
+	$valid = $("#editForm").Validform({
+		btnSubmit:"#submitBtn", 
+		tiptype:4, 
+		ignoreHidden:true,
+		dragonfly:false,
+		tipSweep:false,
+		showAllError:true,
+		postonce:true,
+		ajaxPost:false,
+		datatype:{
+			
+		},
+		usePlugin:{
+		},
+		beforeCheck:function(curform){
+				
+		},
+		beforeSubmit:function(curform){
+				
+			upDate();
+			return false;
+		},
+		callback:function(data){
+			
+		}
+	});
+});
+function read(){
+	$.ajax({
+		url : basePath + "/driver/read",
+		data : {
+			"driverId" : id
+		},
+		dataType : "json",
+		type : "post",
+		success : function(data) {
+			if (data.success) {
+				$("#editForm").form('load', data.msg[0]); 
+			} else {
+				alert(data.msg);
+			}
+		},
+
+		error : function() {
+			alert("请求失败");
+		}
+	});
+}
+function upDate(){
+	$.ajax({
+		url : basePath + "/driver/updata",
+		data : $("#editForm").serialize(),
+		dataType : "json",
+		type : "post",
+		success : function(data) {
+			if (data.success) {
+				alert("保存成功！");
+			} else {
+				alert(data.msg);
+			}
+		},
+		
+		error : function() {
+			alert("请求失败");
+		}
+	});
+}

@@ -1,0 +1,42 @@
+package com.rescam.sywm.server.service.warehouse.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.rescam.common.server.dao.BaseDAO;
+import com.rescam.sywm.server.entity.StorageAreas;
+import com.rescam.sywm.server.service.warehouse.StorageAreasService;
+
+@Service
+public class StorageAreaServerImpl implements StorageAreasService{
+
+	@Autowired
+	private BaseDAO<StorageAreas> storageAreaDAO;
+	
+	@Override
+	public Long getCount(Map<String, String> params) throws Exception {
+		String hql = "select count(1) from StorageAreas ";
+		String searchCode = params.get("searchCode");
+		if (searchCode != null & searchCode != "") {
+			hql += "and areasName like '%" + searchCode + "%' ";
+		}
+
+		return storageAreaDAO.count(hql);
+	}
+
+	@Override
+	public List<StorageAreas> search(Map<String, String> params) throws Exception {
+		String hql = "from StorageAreas ";
+		String searchCode = params.get("searchCode");
+		int page = Integer.valueOf((params.get("page")));
+		int rows = Integer.valueOf((params.get("length")));
+		if (searchCode != null & searchCode != "") {
+			hql += "and areasName like '%" + searchCode + "%' ";
+		}
+
+		return storageAreaDAO.find(hql, new Object[0], page, rows);
+	}
+}

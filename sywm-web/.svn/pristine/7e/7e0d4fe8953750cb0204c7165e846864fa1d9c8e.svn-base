@@ -1,0 +1,42 @@
+/**
+ * 
+ */
+$(function() {
+	// 切换导航状态
+	toggleNav(9, 2, 0);
+
+	//加载数据
+	$.ajax({
+		url : basePath + "/storageRacks/edit",
+		data : {
+		    storageRacksId : storageRacksId
+		},
+		dataType : 'json',
+		success : function(data) {
+			$("#editForm").form('load', data.msg);
+			if(data.msg.storageRacksType==10){
+			    $("#storageRacksType").val("标准横梁式");
+			} else if(data.msg.storageRacksType==11){
+			    $("#storageRacksType").val("横梁式（被立柱所挡，不可用）");
+			} else if(data.msg.storageRacksType==12){
+			    $("#storageRacksType").val("横梁式（被横梁所挡，上3层不可用）");
+			} else if(data.msg.storageRacksType==13){
+			    $("#storageRacksType").val("横梁式（下层拆零货架）");
+			} else if(data.msg.storageRacksType==14){
+			    $("#storageRacksType").val("横梁式（隧道式，上3层可用）");
+			} else if(data.msg.storageRacksType==20){
+			    $("#storageRacksType").val("标准驶入式 ");
+			} else {
+			    $("#storageRacksType").val("数据错误");
+			}
+			
+			$("#warehouseId").val(data.msg.warehouse.warehouseId);
+			if(data.msg.storageAreas){
+			    $("#storageAreasId").val(data.msg.storageAreas.storageAreasId);
+			}
+		},
+		error : function() {
+			alertWm("系统错误，请稍后再试。");
+		}
+	});
+});

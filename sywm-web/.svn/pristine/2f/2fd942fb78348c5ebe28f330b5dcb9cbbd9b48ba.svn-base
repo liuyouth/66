@@ -1,0 +1,183 @@
+$(function() {
+    // 切换导航状态
+    toggleNav(10, 2, 0);
+    readAuth();
+    
+});
+function readAuth() {
+    $.ajax({
+	url : basePath + "/systemFunction/authList",
+	// data : $('#addForm').serialize(),
+	dataType : 'json',
+	type : 'post',
+	success : function(data) {
+
+	    addAuth(data);
+	    read()
+	},
+	error : function() {
+	    alertWm("系统错误，请稍后再试。");
+	}
+    });
+    
+}
+function read(){
+    $.ajax({
+	url : basePath + "/systemFunction/readAuth/"+userGroupId+"",
+	// data : $('#addForm').serialize(),
+	dataType : 'json',
+	type : 'post',
+	success : function(data) {
+
+	    toAuth(data)
+	},
+	error : function() {
+	    alertWm("系统错误，请稍后再试。");
+	}
+    });
+}
+function toAuth(data){
+    if (data.length>0) {
+	for (var i = 0; i < data.length; i++) {
+	    var systemFunctionId=data[i].systemFunction.systemFunctionId;
+	    if (data[i].userAuth>0) {
+		$("input:checkbox[class='writeFlg'][id='"+systemFunctionId+"']").prop('checked',true)
+		
+	    }else{
+		var systemFunctionId=data[i].systemFunction.systemFunctionId;
+		$("input:checkbox[class='readFlg'][id='"+systemFunctionId+"']").prop('checked',true)
+	    }
+	}
+    }
+}
+function addAuth(data) {
+    var dataListStr="";
+    var list=data.children;
+    
+    for (var i = 0; i < list.length; i++) {
+	 var lc=list[i].children;
+	 dataListStr="";
+	 dataListStr += '<div class="am-g"><label  class="am-u-sm-3 am-form-label">'
+		    +list[i].systemFunctionName
+		    + ' </label>';
+	 
+	 if (lc.length==0) {
+	     dataListStr += '<div class="am-u-sm-9" style="padding-left: 30%"><label class="am-checkbox-inline">'
+		    +'<input type="checkbox"  value="0" id='+list[i].systemFunctionId+' class="readFlg" data-id='+list[i].systemFunctionId+'>读'
+		    + '</label>'
+	            +'<label class="am-checkbox-inline"><input type="checkbox"  value="1" id='+list[i].systemFunctionId+' data-id='+list[i].systemFunctionId+' class="writeFlg">写'
+	 	    + '</label> </div>'
+	     dataListStr += '</div>';
+	     $("#dataListInfo").append(dataListStr);
+	 }else{
+	     dataListStr += '</div>';
+	     $("#dataListInfo").append(dataListStr);
+	     //var c=list[i].children;
+	     for (var j = 0; j < lc.length; j++) {
+		 dataListStr="";
+		 dataListStr += '<div class="am-g"><div class="am-u-sm-3" style="padding-left:10%">'
+			    +lc[j].systemFunctionName
+			    + ' </div>'
+		 dataListStr += '<div class="am-u-sm-9" style="padding-left: 30%"><label class="am-checkbox-inline">'
+			    +'<input type="checkbox"  value="0" id='+lc[j].systemFunctionId+' data-id='+list[i].systemFunctionId+' class="readFlg">读'
+			    + '</label>'
+		            +'<label class="am-checkbox-inline"><input type="checkbox"  value="1" id='+lc[j].systemFunctionId+' data-id='+list[i].systemFunctionId+' class="writeFlg">写'
+		 	    + '</label></div></div>'
+		            $("#dataListInfo").append(dataListStr);
+		}
+	 }    
+    }
+    $("#dataListInfo").append(dataListStr);
+   
+}
+function saveAuth(){
+   /* var dataSave=[];
+    $("input:checkbox[class='readFlg']:checked").each(function() {
+	var id=$(this).attr("data-id");
+	var value=$(this).val();
+	var list="{";
+	list+= '"id":"'+id+'"';
+	list+= ',"value":"'+value+'"';
+	list+= "}";
+	var data=JSON.parse(list);
+	dataSave.push(data);
+    });
+    $("input:checkbox[class='writeFlg']:checked").each(function() {
+	var id=$(this).attr("data-id");
+	var value=$(this).val();
+	var list="{";
+	list+= '"id":"'+id+'"';
+	list+= ',"value":"'+value+'"';
+	list+= "}";
+	var data=JSON.parse(list);
+	dataSave.push(data);
+    });
+    var list1="{";
+	list1+= '"dataList":"'+dataSave+'"';
+	list1+= "}";
+	var authData=JSON.parse(list1);
+    alert(authData);
+    $.ajax({
+	url : basePath + "/goodsReceipt/add",
+	type : "post",
+	data : JSON.stringify(dataSave),
+	dataType : "json",
+	contentType : "application/json",
+	success : function(data) {
+	  
+		
+	},
+	error : function() {
+		alertWm("系统错误，请稍后再试。");
+	}
+    });*/
+    var read=[];
+    var write=[];
+    $("input:checkbox[class='writeFlg']:checked").each(function() {
+	var id=$(this).attr("data-id");
+	var value=$(this).val();
+	write.push(id);
+    });
+    
+    $("input:checkbox[class='readFlg']:checked").each(function() {
+	var id=$(this).attr("data-id");
+	var value=$(this).val();
+	if (write.indexOf(id)==-1) {
+	    read.push(id);
+	}
+	
+    });
+    
+    //JSON.stringify(obj);
+    
+    /*var list="{";
+	list+= '"read":"'+read+'"';
+	list+= ',"write":"'+write+'"';
+	list+= "}";
+	var data=JSON.parse(list);*/
+	$.ajax({
+		url : basePath + "/systemFunction/add",
+		type : "post",
+		
+		data:{
+		    read : read.toString(),
+		    write:write.toString(),
+		    userGroupId:userGroupId
+		    
+	    },
+		dataType : "json",
+		success : function(data) {
+		    alertWm("新增成功",okBack);
+			
+		},
+		error : function() {
+			alertWm("系统错误，请稍后再试。");
+		}
+	    });
+   
+    
+}
+//新增后点击确定的回调
+function okBack(){
+    window.location.href = basePath + "/user_auth/userGroupList/view";
+}

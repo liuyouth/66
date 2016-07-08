@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Class-Path: aopalliance-1.0.jar commons-logging-1.2.jar jackson-annota
+ tions-2.7.3.jar jackson-core-2.7.3.jar jackson-databind-2.7.3.jar jst
+ l-1.2.jar spring-aop-4.2.5.RELEASE.jar spring-beans-4.2.5.RELEASE.jar
+  spring-context-4.2.5.RELEASE.jar spring-core-4.2.5.RELEASE.jar sprin
+ g-expression-4.2.5.RELEASE.jar spring-web-4.2.5.RELEASE.jar spring-we
+ bmvc-4.2.5.RELEASE.jar
+

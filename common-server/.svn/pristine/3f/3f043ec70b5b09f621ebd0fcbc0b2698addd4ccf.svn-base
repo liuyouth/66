@@ -1,0 +1,128 @@
+package com.rescam.common.server.util;
+
+import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.persistence.Entity;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class EntityUtils {
+
+	public static Map<String, Object> filter(Object entity, String filterString) throws Exception {
+		List<Object> fields = parseFilterString(filterString);
+		return filter(entity, fields);
+	}
+
+	public static List<Map<String, Object>> filter(List<?> entities, String filterString) throws Exception {
+		List<Object> fields = parseFilterString(filterString);
+		List<Map<String, Object>> list = new ArrayList<>();
+		for (Object entity : entities) {
+			list.add(filter(entity, fields));
+		}
+		return list;
+	}
+
+	private static Map<String, Object> filter(Object entity, List<Object> fields) {
+		if (entity == null) {
+			return null;
+		}
+		Map<String, Object> map = new HashMap<>();
+		for (Object field : fields) {
+			if (field instanceof String) {
+				String fieldName = (String) field;
+				if ("*".equals(fieldName)) {
+					PropertyDescriptor[] descriptors = PropertyUtils.getPropertyDescriptors(entity);
+					PD: for (int i = 0; i < descriptors.length; i++) {
+						PropertyDescriptor descriptor = descriptors[i];
+						String name = descriptor.getName();
+						if ("class".equals(name)) {
+							continue;
+						}
+						Class<?> propertyType = descriptor.getPropertyType();
+						if (propertyType == Set.class) {
+							continue;
+						}
+						Annotation[] annotations = propertyType.getAnnotations();
+						for (int j = 0; j < annotations.length; j++) {
+							Annotation annotation = annotations[j];
+							if (annotation.annotationType() == Entity.class) {
+								continue PD;
+							}
+						}
+						try {
+							Object value = descriptor.getReadMethod().invoke(entity);
+							if (value != null) {
+								map.put(name, value);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				} else {
+					try {
+						Object fieldValue = PropertyUtils.getProperty(entity, fieldName);
+						map.put(fieldName, fieldValue);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			} else if (field instanceof Map<?, ?>) {
+				@SuppressWarnings("unchecked")
+				Map<String, List<Object>> multiField = (Map<String, List<Object>>) field;
+				Entry<String, List<Object>> fieldEntry = multiField.entrySet().iterator().next();
+				String fieldName = fieldEntry.getKey();
+				try {
+					Object fieldValue = PropertyUtils.getProperty(entity, fieldName);
+					map.put(fieldName, filter(fieldValue, fieldEntry.getValue()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return map;
+	}
+
+	private static List<Object> parseFilterString(String filterString) throws Exception {
+		return new ObjectMapper().readValue(filterString, new TypeReference<List<Object>>() {
+		});
+	}
+
+	public static void populate(Object entity, Map<String, ? extends Object> properties) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		for (Entry<String, ? extends Object> entry : properties.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+			if (!key.contains(".")) {
+				if ("".equals(value)) {
+					BeanUtils.copyProperty(entity, key, null);
+				} else {
+					map.put(key, value);
+				}
+			} else {
+				String[] keyArray = key.split("\\.");
+				if (keyArray.length != 2) {
+					continue;
+				}
+				Object bean = null;
+				if (!"-1".equals(value)) {
+					PropertyDescriptor descriptor = PropertyUtils.getPropertyDescriptor(entity, keyArray[0]);
+					bean = descriptor.getPropertyType().newInstance();
+					BeanUtils.copyProperty(bean, keyArray[1], value);
+				}
+				map.put(keyArray[0], bean);
+			}
+		}
+		BeanUtils.populate(entity, map);
+	}
+}
