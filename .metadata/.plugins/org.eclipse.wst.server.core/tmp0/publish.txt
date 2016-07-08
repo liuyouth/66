@@ -1,7 +1,0 @@
-#Tomcat publish data
-#Fri Jul 08 17:21:19 CST 2016
-org.eclipse.jst.j2ee.server\:common-server=WEB-INF/lib/common-server.jar
-org.eclipse.jst.j2ee.server\:common-web=WEB-INF/lib/common-web.jar
-org.eclipse.jst.j2ee.server\:sywm-rs=WEB-INF/lib/sywm-rs.jar
-org.eclipse.jst.j2ee.server\:common-rs=WEB-INF/lib/common-rs.jar
-org.eclipse.jst.j2ee.server\:common-vo=WEB-INF/lib/common-vo.jar
